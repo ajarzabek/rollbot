@@ -38,7 +38,10 @@ load_dotenv()
 
 token = os.environ.get('rollbot_token')
 
-client = discord.Client()
+intents = discord.Intents.default()
+intents.messages = True
+intents.message_content = True
+client = discord.Client(intents=intents)
 
 dice_pattern = re.compile('^(?:(\d+)x)?(\d*)[dD]([1-9]\d*|[bBfFtT])([+-]\d+)?$')
 
@@ -86,7 +89,6 @@ def get_response(channel, author, line):
         for spec in parts:
             match = dice_pattern.match(spec)
             if match:
-                print("spec matched")
                 times = match.group(1)
                 number = match.group(2)
                 die = match.group(3)

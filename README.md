@@ -11,10 +11,13 @@ Features:
 * Build-in support for Fudge/Fate dice and FitD rolls
 * Optional comment to avoid confusion what the roll was about
 
-Python 3.x is needed. Requirements need to be installed with pip from requirements.txt
+Python >=3.8 is needed. Requirements need to be installed with pip from requirements.txt
 Before running, place a file called `.env` in the current directory with the following 
 contents, substituting your Discord bot token:
 
     rollbot_token = XXxXxxxXXXxXxxXX
 
 
+Note: In order for the bot to receive messages in channels, the owner should enable
+Message Content Intent in Privilaged Gateway Intents on the bot's page in Discord Developer
+Portal
