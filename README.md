@@ -8,7 +8,7 @@ Features:
 * Perform multiple rolls on same command
 * Different syntax for when you want dice addded together or when you want to know
   individual dice results (for dice pools etc.)
-* Build-in support for Fudge/Fate dice and FitD rolls
+* Built-in support for Fudge/Fate dice and FitD rolls
 * Optional comment to avoid confusion what the roll was about
 
 Python >=3.8 is needed. Requirements need to be installed with pip from requirements.txt

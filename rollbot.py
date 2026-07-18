@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import os
 import discord
 from random import randint
@@ -28,11 +29,30 @@ Komentarz (opcjonalny) można wykorzystać do oznaczenia na co się rzuca, np.:
 .r 7xd10 -- rzucam ciężarówką
 """
 
-console_mode = '--console' in sys.argv
+parser = argparse.ArgumentParser(
+    prog='RollBot',
+    description='Bot discordowy do rzucania kostkami')
 
-log_file_name = 'rollbot.log' if not console_mode else 'rollbot_console.log'
+parser.add_argument('-c', '--console', action="store_true", help="tryb konsolowy do testowania rzutów")
+parser.add_argument('--logfile', help="ścieżka do logów (domyślnie logowanie do stdout)")
+parser.add_argument('--loglevel', help="ścieżka do logów (domyślnie logowanie do stdout)")
+args = parser.parse_args()
 
-logging.basicConfig(filename=log_file_name, level=logging.INFO)
+console_mode = args.console
+loglevel_str = None
+if args.loglevel:
+    loglevel_str = args.loglevel.upper()
+loglevel = logging.getLevelNamesMapping().get(loglevel_str, logging.INFO)
+
+log_file_name = args.logfile
+
+if console_mode and not log_file_name:
+    log_file_name = 'rollbot_console.log'
+
+handler = (logging.FileHandler(log_file_name) if log_file_name
+           else logging.StreamHandler(sys.stdout))
+
+logging.basicConfig(handlers=[handler], level=loglevel)
 
 load_dotenv()
 
@@ -43,7 +63,7 @@ intents.messages = True
 intents.message_content = True
 client = discord.Client(intents=intents)
 
-dice_pattern = re.compile('^(?:(\d+)x)?(\d*)[dD]([1-9]\d*|[bBfFtT])([+-]\d+)?$')
+dice_pattern = re.compile(r'^(?:(\d+)x)?(\d*)[dD]([1-9]\d*|[bBfFtT])([+-]\d+)?$')
 
 async def on_leave():
     logging.info("Disconnecting.");
@@ -55,10 +75,6 @@ async def on_leave():
 @client.event
 async def on_ready():
     logging.info(f'{client.user} has connected to Discord!')
-#    for guild in client.guilds:
-#        for channel in guild.text_channels:
-#            print(f'Got channel {channel.name} in guild {guild.name}')
-#            await channel.send('Jestem!')
 
 def blades_acc(a, b):
     if a == 'cr':
