@@ -37,7 +37,7 @@ jobs:
           appSourcePath: ${{ github.workspace }}
           _dockerfilePathKey_: _dockerfilePath_
           _targetLabelKey_: _targetLabel_
-          registryUrl: 
+          registryUrl: wkfcontainters.azurecr.io
           registryUsername: ${{ secrets.ROLLBOTAPP_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.ROLLBOTAPP_REGISTRY_PASSWORD }}
           containerAppName: rollbot-app
