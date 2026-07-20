@@ -42,7 +42,7 @@ jobs:
           registryPassword: ${{ secrets.ROLLBOTAPP_REGISTRY_PASSWORD }}
           containerAppName: rollbot-app
           resourceGroup: Default
-          imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
+          imageToBuild: default/rollbot:${{ github.sha }}
           _buildArgumentsKey_: |
             _buildArgumentsValues_
 
